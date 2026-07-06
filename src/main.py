@@ -12,9 +12,7 @@ def main():
     
     while True:
         success, frame = camera.read()
-        h,w,c = frame.shape
 
-        
         if not success:
             print('Camera is not able to Process frames')
             break
