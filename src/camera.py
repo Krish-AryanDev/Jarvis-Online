@@ -25,6 +25,7 @@ def start_camera(command_queue):
     face_tracking_enabled = False
     diagnostics_enabled = False
     night_vision_enabled = False
+    thermal_mode_enabled = False
     recording_enabled = False
     recorder = None
     screenshot_index = 1
@@ -71,8 +72,12 @@ def start_camera(command_queue):
         green[:, :, 2] = (green[:, :, 2] * 0.10).astype('uint8')
         return green
 
+    def apply_thermal_mode(frame):
+        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        return cv.applyColorMap(gray, cv.COLORMAP_JET)
+
     def handle_command(text, frame):
-        nonlocal hud_enabled, face_tracking_enabled, diagnostics_enabled, night_vision_enabled, should_run
+        nonlocal hud_enabled, face_tracking_enabled, diagnostics_enabled, night_vision_enabled, thermal_mode_enabled, should_run
         resolved = resolve_command(text)
         if resolved is None:
             return
@@ -103,6 +108,9 @@ def start_camera(command_queue):
         elif resolved.name == 'night_vision':
             night_vision_enabled = not night_vision_enabled
             hud.notify('NIGHT VISION TOGGLED')
+        elif resolved.name == 'thermal_mode':
+            thermal_mode_enabled = not thermal_mode_enabled
+            hud.notify('THERMAL MODE TOGGLED')
         elif resolved.name == 'start_recording':
             start_recording(frame)
         elif resolved.name == 'stop_recording':
@@ -162,6 +170,9 @@ def start_camera(command_queue):
 
         if night_vision_enabled:
             display = apply_night_vision(display)
+
+        if thermal_mode_enabled:
+            display = apply_thermal_mode(display)
 
         if hud_enabled:
             hud.draw(display, face_box=face_box, right_eye_box=right_eye_box, fps=fps, battery_level=None)

@@ -12,6 +12,8 @@ COMMANDS = {
     'night vision': 'night_vision',
     'night' : 'night_vision',
     'light' : 'night_vision',
+    'thermal mode': 'thermal_mode',
+    'thermal': 'thermal_mode',
     'start recording': 'start_recording',
     'stop recording': 'stop_recording',
     'take screenshot': 'take_screenshot',
@@ -65,6 +67,9 @@ def resolve_command(text):
 
     if 'night vision' in normalized:
         return CommandAction('night_vision', normalized)
+
+    if 'thermal mode' in normalized or 'thermal' in normalized:
+        return CommandAction('thermal_mode', normalized)
 
     if 'start recording' in normalized:
         return CommandAction('start_recording', normalized)
