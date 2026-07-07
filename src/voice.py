@@ -47,6 +47,6 @@ def start_voice(command_queue):
                     # if text == "stop" or text == " stop" or text == "stop " or text == " stop ":
                     #     print('GoodBye')
                     #     break
-                    if "stop" in text:
+                    if text.strip() == "stop":
                         print('GoodBye')
                         break

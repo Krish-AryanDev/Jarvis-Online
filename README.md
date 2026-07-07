@@ -9,3 +9,5 @@ using Vosk, sounddevice
 
 
 
+
+
