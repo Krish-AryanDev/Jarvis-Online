@@ -2,3 +2,6 @@ opencv-python
 numpy
 vosk
 sounddevice
+edge-tts
+pyttsx3
+miniaudio

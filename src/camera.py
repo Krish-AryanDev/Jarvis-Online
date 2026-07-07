@@ -6,6 +6,7 @@ import cv2 as cv
 from Commands import resolve_command
 from face_tracking import FaceTracker
 from hud import HUDController
+from speaker import speak
 
 def start_camera(command_queue):
     camera = cv.VideoCapture(0)
@@ -84,6 +85,7 @@ def start_camera(command_queue):
 
         if resolved.name == 'jarvis':
             hud.notify('At your Service sir', duration=4.0, color=(0, 255, 0))
+            speak('At your service, sir.')
         elif resolved.name == 'jarvis boot up':
             hud.config.enabled = True
             face_tracking_enabled = True
@@ -91,42 +93,55 @@ def start_camera(command_queue):
             hud.config.show_diagnostics = True
             hud.trigger_boot_sequence()
             hud.notify('SYSTEM BOOT SEQUENCE INITIATED', duration=5.0)
+            speak('Initialising systems. Boot sequence engaged.')
         elif resolved.name == 'enable_hud':
             hud_enabled = True
             hud.config.enabled = True
             hud.notify('HUD ENABLED')
+            speak('Heads-up display activated.')
         elif resolved.name == 'disable_hud':
             hud_enabled = False
             hud.config.enabled = False
+            speak('Heads-up display disabled.')
         elif resolved.name == 'toggle_hud':
             hud_enabled = not hud_enabled
             hud.config.enabled = hud_enabled
             hud.notify('HUD TOGGLED')
+            speak('Heads-up display toggled.')
         elif resolved.name == 'scan_face':
             face_tracking_enabled = True
             hud.notify('FACE SCAN ACTIVE')
+            speak('Scanning face.')
         elif resolved.name == 'night_vision':
             night_vision_enabled = not night_vision_enabled
             hud.notify('NIGHT VISION TOGGLED')
+            speak('Night vision toggled.')
         elif resolved.name == 'thermal_mode':
             thermal_mode_enabled = not thermal_mode_enabled
             hud.notify('THERMAL MODE TOGGLED')
+            speak('Thermal mode toggled.')
         elif resolved.name == 'start_recording':
             start_recording(frame)
+            speak('Recording started.')
         elif resolved.name == 'stop_recording':
             stop_recording()
+            speak('Recording stopped.')
         elif resolved.name == 'take_screenshot':
             save_screenshot(frame)
+            speak('Screenshot captured.')
         elif resolved.name == 'toggle_face_tracking':
             face_tracking_enabled = not face_tracking_enabled
             if not face_tracking_enabled:
                 face_tracker.reset()
             hud.notify('FACE TRACKING TOGGLED')
+            speak('Face tracking toggled.')
         elif resolved.name == 'toggle_diagnostics':
             diagnostics_enabled = not diagnostics_enabled
             hud.config.show_diagnostics = diagnostics_enabled
             hud.notify('DIAGNOSTICS TOGGLED')
+            speak('Diagnostics toggled.')
         elif resolved.name == 'stop':
+            speak('Goodbye, sir.')
             stop_recording()
             should_run = False
 
