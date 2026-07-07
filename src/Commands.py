@@ -11,6 +11,7 @@ COMMANDS = {
     'scan face': 'scan_face',
     'night vision': 'night_vision',
     'night' : 'night_vision',
+    'light' : 'night_vision',
     'start recording': 'start_recording',
     'stop recording': 'stop_recording',
     'take screenshot': 'take_screenshot',

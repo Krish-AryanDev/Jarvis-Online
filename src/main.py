@@ -13,3 +13,4 @@ voice_thread.start()
 start_camera(command_queue)
 
 voice_thread.join()
+
